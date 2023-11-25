@@ -1,0 +1,54 @@
+<div>
+    <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+        <div nz-row nzGutter="16">
+            <div nz-col nzSm="12">
+                <nz-form-item>
+                    <nz-form-label>Tên khách hàng</nz-form-label>
+                    <nz-form-control nzErrorTip="Nhập đầy đủ thông tin!">
+                        <input nz-input formControlName="fullName" placeholder="Tên khách hàng" [disabled]="true" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col nzSm="12">
+                <nz-form-item>
+                    <nz-form-label>Số điện thoại</nz-form-label>
+                    <nz-form-control nzErrorTip="Nhập đầy đủ thông tin!">
+                        <input nz-input formControlName="phoneNumber" placeholder="Số điện thoại" [disabled]="true" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div nz-row nzGutter="16">
+            <div nz-col nzSm="24">
+                <nz-form-item>
+                    <nz-form-label nzRequired>Hình thức thanh toán</nz-form-label>
+                    <nz-form-control nzErrorTip="Nhập đầy đủ thông tin!">
+                        <nz-select formControlName="paymentMethod" nzPlaceHolder="Lựa chọn">
+                            <nz-option nzValue="Thanh toán bằng tiền mặt"
+                                nzLabel="Thanh toán bằng tiền mặt"></nz-option>
+                            <nz-option nzValue="Thanh toán qua chuyển khoản"
+                                nzLabel="Thanh toán qua chuyển khoản"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div nz-row nzGutter="16">
+            <div nz-col nzSm="24">
+                <nz-form-item>
+                    <nz-form-label nzRequired>Trạng thái thanh toán</nz-form-label>
+                    <nz-form-control nzErrorTip="Nhập đầy đủ thông tin!">
+                        <nz-select formControlName="orderStatus" nzPlaceHolder="Lựa chọn">
+                            <nz-option nzValue="0" nzLabel="Đã thanh toán"></nz-option>
+                            <nz-option nzValue="1" nzLabel="Chưa thanh toán"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </form>
+</div>
+<div *nzModalFooter>
+    <button nz-button nzType="default" (click)="destroyModal()">Hủy</button>
+    <button nz-button nzType="primary" (click)="updateOrder()">Cập nhật</button>
+</div>

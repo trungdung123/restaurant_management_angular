@@ -1,0 +1,188 @@
+<div class="wrapper">
+
+    <!-- Navbar -->
+    <app-navbar></app-navbar>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <app-admin-sidebar></app-admin-sidebar>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Đặt món</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a [routerLink]="['/admin']">Trang chủ</a></li>
+                            <li class="breadcrumb-item active">Đặt món</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content" id="pdfContent">
+            <div class="card card-default">
+                <div class="card-header">
+                    <h3 class="card-title">Thông tin khách hàng</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Họ tên</label>
+                                <input type="text" class="form-control" [value]="customerDto.fullName" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Số điện thoại</label>
+                                <input type="text" class="form-control" [value]="customerDto.phoneNumber" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="text" class="form-control" [value]="customerDto.email" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Địa chỉ</label>
+                                <input type="text" class="form-control" [value]="customerDto.address" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+            <div class="card card-default">
+                <div class="card-header">
+                    <h3 class="card-title">Đặt món</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <form nz-form nzLayout="vertical" [formGroup]="validateForm" class="no-print">
+                        <div nz-row nzGutter="16">
+                            <div nz-col nzSm="9">
+                                <nz-form-item>
+                                    <nz-form-label>Chọn danh mục</nz-form-label>
+                                    <nz-form-control nzErrorTip="Nhập đầy đủ thông tin!">
+                                        <nz-select (ngModelChange)="onChangeCategory($event)"
+                                            formControlName="categoryId" nzPlaceHolder="Lựa chọn">
+                                            <nz-option *ngFor="let item of categories" [nzValue]="item.id"
+                                                [nzLabel]="item.name"></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                        <div nz-row nzGutter="16">
+                            <div nz-col nzSm="9">
+                                <nz-form-item>
+                                    <nz-form-label nzRequired>Chọn món</nz-form-label>
+                                    <nz-form-control nzErrorTip="Nhập đầy đủ thông tin!">
+                                        <nz-select (ngModelChange)="onChangeMenuItem($event)"
+                                            formControlName="menuItemId" nzPlaceHolder="Lựa chọn">
+                                            <nz-option *ngFor="let item of menuItems" [nzValue]="item.id"
+                                                [nzLabel]="item.name"></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div nz-col nzSm="3">
+                                <nz-form-item>
+                                    <nz-form-label nzRequired>Đơn giá</nz-form-label>
+                                    <nz-form-control nzErrorTip="Nhập đầy đủ thông tin!">
+                                        <input nz-input type="text" [value]="fixPrice" disabled placeholder="Giá">
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div nz-col nzSm="3">
+                                <nz-form-item>
+                                    <nz-form-label nzRequired>Số lượng</nz-form-label>
+                                    <nz-form-control nzErrorTip="Nhập đầy đủ thông tin!">
+                                        <input min="1" formControlName="quantity" nz-input type="number"
+                                            placeholder="Số lượng">
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div nz-col nzSm="5">
+                                <nz-form-item>
+                                    <nz-form-label>Ghi chú</nz-form-label>
+                                    <nz-form-control nzErrorTip="Nhập đầy đủ thông tin!">
+                                        <input formControlName="note" nz-input type="text" placeholder="Ghi chú">
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div nz-col nzSm="2">
+                                <nz-form-item>
+                                    <nz-form-label></nz-form-label>
+                                    <nz-form-control nzErrorTip="Nhập đầy đủ thông tin!">
+                                        <button (click)="addItem()" nz-button class="add-button">
+                                            <span style="font-size: 20px;" nz-icon nzType="plus-circle"
+                                                nzTheme="outline"></span>
+                                        </button>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                    </form>
+                    <nz-form-label>Danh sách đặt món</nz-form-label>
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên món</th>
+                                <th>Bảng giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of orderItems let i= index">
+                                <td>{{i}}</td>
+                                <td>{{ data.menuItemDto.name }}</td>
+                                <td>{{ data.menuItemDto.price.toLocaleString().replaceAll(",",
+                                    ".")}} đ</td>
+                                <td>{{ data.quantity }}</td>
+                                <td>{{ (data.menuItemDto.price * data.quantity).toLocaleString().replaceAll(",",
+                                    ".")}} đ</td>
+                                <td>
+                                    <a (click)="removeMenuItem(data.menuItemDto.id)"><span nz-icon nzType="delete"
+                                            nzTheme="outline"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-info" (click)="saveInfo()">Đặt món</button>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <app-footer></app-footer>
+</div>
+<!-- ./wrapper -->

@@ -1,0 +1,89 @@
+<div class="wrapper">
+
+    <!-- Navbar -->
+    <app-navbar></app-navbar>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <app-admin-sidebar></app-admin-sidebar>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Lịch sử đặt món của khách hàng {{customerDto.fullName}}</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a [routerLink]="['/admin']">Trang chủ</a></li>
+                            <li class="breadcrumb-item active">Lịch sử đặt món</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Lịch sử đặt món</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <button nz-button nzType="primary" (click)="onCreateOrder()">Đặt món</button>
+                            <br />
+                            <br />
+                            <nz-table nzShowSizeChanger nzBordered="true" #filterTable [nzData]="listOfDisplayData"
+                                [nzFrontPagination]="true" [nzLoading]="loading" [nzTotal]="total"
+                                [nzPageSize]="pageSize" [nzPageIndex]="pageIndex">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên khách hàng</th>
+                                        <th>Số điện thoại</th>
+                                        <th>Ngày đặt</th>
+                                        <th>Phương thức thanh toán</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of filterTable.data; let i= index" style="cursor: pointer;">
+                                        <td (click)="onDetailOrder(data.id)">{{i}}</td>
+                                        <td (click)="onDetailOrder(data.id)">{{data.customerDto.fullName}}</td>
+                                        <td (click)="onDetailOrder(data.id)">{{data.customerDto.phoneNumber}}</td>
+                                        <td (click)="onDetailOrder(data.id)">{{data.orderDate | date: 'dd-MM-yyyy'}}
+                                        </td>
+                                        <td (click)="onDetailOrder(data.id)">{{data.paymentMethod}}</td>
+                                        <td (click)="onDetailOrder(data.id)">
+                                            {{data.totalAmount.toLocaleString().replaceAll(",",
+                                            ".")}} đ</td>
+                                        <td (click)="onDetailOrder(data.id)">{{data.status.toString() == 'DONE' ? 'Đã thanh toán' :
+                                            data.status.toString() == 'PENDING' ? 'Chưa thanh toán' : 'undefined'}}</td>
+                                        <td [nzRight]="false">
+                                            <a><span nz-icon nzType="edit" nzTheme="outline"
+                                                    (click)="showModalUpdateOrder(data.id)"></span></a>
+                                            <nz-divider nzType="vertical"></nz-divider>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </nz-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <app-footer></app-footer>
+</div>
+<!-- ./wrapper -->

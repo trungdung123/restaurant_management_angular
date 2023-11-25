@@ -1,0 +1,50 @@
+<div class="" id="printContent">
+        <h1 class="title">Hóa đơn thanh toán</h1>
+    <hr>
+    <div class="patient-info">
+        <div class="left-column">
+            <p><strong>Tên khách hàng:</strong> {{orderDto.customerDto.fullName}}</p>
+            <p><strong>Số diện thoại:</strong> {{orderDto.customerDto.phoneNumber}}</p>
+        </div>
+    </div>
+    <hr>
+
+    <label>Đặt món</label>
+    <table class="results">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Tên món</th>
+                <th>Bảng giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of orderDto.orderItemsDto; let i= index" style="cursor: pointer;">
+                <td>{{i}}</td>
+                <td>{{data.menuItemDto.name}}</td>
+                <td>{{ data.menuItemDto.price.toLocaleString().replaceAll(",",
+                    ".")}} đ</td>
+                <td>{{ data.quantity }}</td>
+                <td>{{ (data.menuItemDto.price * data.quantity).toLocaleString().replaceAll(",",
+                    ".")}} đ</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+
+    <div class="float-right" style="margin-right: 10px;">
+        <label>Thành tiền: {{orderDto.totalAmount.toLocaleString().replaceAll(",",
+            ".")}} đ</label><br>
+        <label>Khuyến mãi: 0 đ</label><br>
+        <label>Khách thanh toán: {{orderDto.totalAmount.toLocaleString().replaceAll(",",
+            ".")}} đ</label><br>
+    </div>
+    <br><br><br><br>
+
+    <div *nzModalFooter id="no-print">
+        <button nz-button nzType="default" (click)="destroyModal()">Hủy</button>
+        <button nz-button nzType="primary" (click)="onPrint()">In hóa đơn</button>
+    </div>
+</div>
